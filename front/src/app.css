@@ -6,6 +6,7 @@
 	margin: 0;
 	border: 0;
   font-family: "Roboto";
+
 }
 
 body, html, #app {
@@ -15,7 +16,8 @@ body, html, #app {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #3023ae 0%,#c86dd7 100%);}
+    
+  }
 
 svg {
   width: 100%;
@@ -24,8 +26,8 @@ svg {
 
 input,
 select,
-textarea {
-	box-shadow: inset 0 0 0 50px #373544;
+textarea {    
+	box-shadow: inset 0 0 0 50px rgb(97, 94, 100);
 	-webkit-text-fill-color: #fff;
   border: 0;
 	border-radius: 0;
