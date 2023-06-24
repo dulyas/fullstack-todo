@@ -25,7 +25,7 @@ app.use(cookieParser())
 app.use('/', router);
 app.use(errorMiddleware)
 
-const swaggerFile = JSON.parse(readFileSync(join(__dirname, '../swagger/output.json')))
+const swaggerFile = JSON.parse(readFileSync(join(__dirname, '../swagger/output.json')).toString())
 app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 const server = createServer(app)
