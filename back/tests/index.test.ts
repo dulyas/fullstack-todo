@@ -1,5 +1,5 @@
 
-import { Lesson } from "../src/models"
+
 import request from 'supertest'
 import app from "../src/index"
 

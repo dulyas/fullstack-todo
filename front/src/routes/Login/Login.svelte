@@ -3,12 +3,14 @@ import { resize } from "@/transition";
 import { getContext } from "svelte";
 import type { Writable } from "svelte/store";
 import type { UserService } from "@/models";
+import Loader from "@/components/Loader.svelte";
 
 type LoginRegister = 'login' | 'register'
 
 
 const errorMessage = getContext<Writable<string>>('errorMessage')
 const userService = getContext<UserService>('userService')
+const isLoading = getContext<Writable<boolean>>('isLoading')
 
 let selectedTab: LoginRegister = 'login'
 let email: string = ''
@@ -55,6 +57,7 @@ const sendForm = async () => {
 </script>
 
 <div class="lay">
+
     <div class="login">
         <div class="tabs selected-{selectedTab}">
             {#each tabs as { code, title } }
@@ -116,6 +119,8 @@ const sendForm = async () => {
         justify-content: center;
         align-items: center;
         background: linear-gradient(135deg, #0b0736 0%,#603a66 100%);
+
+
 
         .login {
             margin-block-start: 25%;

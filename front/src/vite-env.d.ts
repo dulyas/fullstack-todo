@@ -4,11 +4,13 @@ declare module "*.svelte" {
     export default component;
 }
 
-declare namespace svelte.JSX {
-    interface HTMLAttributes<T> {
-        onclick_outside: () => void
-    }
-}
+  
+  
+  declare namespace svelteHTML {
+      interface HTMLAttributes<T> {
+          "on:outclick"?: () => void
+      }
+  }
 
 /// <reference types="svelte" />
 /// <reference types="vite/client" />

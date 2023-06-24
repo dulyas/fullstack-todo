@@ -1,5 +1,6 @@
 import { Model } from "objection";
 import UserDto from "@/dtos/user-dto";
+import Todo from "./Todo";
 
 export type UserWithTokens = {
     refreshToken: string
@@ -12,38 +13,24 @@ export default class User extends Model {
     id!: number
     email!: string
     password!: string
+	todos?: Todo[]
 
     static get tableName() {
         return 'users'
     }
 
-    // static get relationMappings() {
-	// 	return {
-	// 		teachers: {
-	// 			relation: Model.ManyToManyRelation,
-	// 			modelClass: Teacher,
-	// 			join: {
-	// 				from: 'lessons.id',
-	// 				through: {
-	// 				  from: 'lesson_teachers.lesson_id',
-	// 				  to: 'lesson_teachers.teacher_id'
-	// 				},
-	// 				to: 'teachers.id'
-	// 			  }
-	// 		},
-	// 		students: {
-	// 			relation: Model.ManyToManyRelation,
-	// 			modelClass: Student,
-	// 			join: {
-	// 				from: 'lessons.id',
-	// 				through: {
-	// 				  from: 'lesson_students.lesson_id',
-	// 				  extra: ['visit'],
-	// 				  to: 'lesson_students.student_id'
-	// 				},
-	// 				to: 'students.id'
-	// 			  }
-	// 		}
-	// 	};
-	// }
+
+	
+    static get relationMappings() {
+		return {
+			todos: {
+				relation: Model.HasManyRelation,
+				modelClass: Todo,
+				join: {
+					from: "users.id",
+					to: "todos.user_id",
+				},
+			},
+		};
+	}
 }

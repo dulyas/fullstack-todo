@@ -53,6 +53,7 @@ export const validateAccessToken = (token: string): UserDto | null => {
 export const validateRefreshToken = (token: string): UserDto | null => {
     try {
         const userData = jwt.verify(token, config.jwt.acess_secret)
+
         return userData as UserDto
     } catch (e) {
         return null

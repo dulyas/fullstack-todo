@@ -19,17 +19,17 @@ export function resize(node, { delay = 0, duration = 300, easing = cubicInOut })
             `overflow: hidden;` +
             `opacity: ${t * opacity};` +
             `height: ${t * height}px;` +
-            `padding-left: ${t * padding_left}px;` +
-            `padding-right: ${t * padding_right}px;` +
+            // `padding-left: ${t * padding_left}px;` +
+            // `padding-right: ${t * padding_right}px;` +
             // `margin-left: ${t * margin_left}px;` +
             // `margin-right: ${t * margin_right}px;` +
             // `lineHeight: ${t * lineHeight}` +
             `margin-top: ${t * margin_top}px;` +
             `margin-bottom: ${t * margin_bottom}px;` +
             `padding-top: ${t * padding_top}px;` +
-            `padding-bottom: ${t * padding_top}px;` +
-            `padding-left: ${t * padding_left}px;` +
-            `padding-right: ${t * padding_right}px;` 
+            `padding-bottom: ${t * padding_top}px;` 
+            // `padding-left: ${t * padding_left}px;` +
+            // `padding-right: ${t * padding_right}px;` 
             // `max-height: ${t * maxHeight}px;` 
     };
 }

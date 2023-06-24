@@ -7,6 +7,8 @@
     const user = getContext<Writable<IUser>>('user')
     const { logout } = getContext<UserService>('userService')
 
+
+
     const onClickLogout = () => {
         logout($user.email)
     }
@@ -43,6 +45,7 @@
     }
 
     .todo {
+
         width: 100%;
         height: 100%;
         display: flex;
@@ -51,6 +54,7 @@
         header {
             width: 100%;
             height: 60px;
+            flex-shrink: 0;
             background: rgb(53, 49, 49);
             // position: absolute;
             top: 0;
@@ -65,10 +69,10 @@
         }
 
         .todos {
-            
-            margin-block-start: 50px;
+            margin: 50px 5px 0px;
+            // margin-block-start: 50px;
             max-width: 400px;
-            width: 100%;
+            width: calc(100% - 10px);
             // padding: 20px;
             // height: 100%;
             border: 2px grey solid;

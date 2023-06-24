@@ -15,7 +15,7 @@
     
 
     const checkAuth = async () => {
-        $userIsLoading = false
+        // $userIsLoading = false
         try {
             // this.setLoading(true)
             const response = await AuthService.refresh()

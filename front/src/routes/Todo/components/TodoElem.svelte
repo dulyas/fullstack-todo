@@ -2,18 +2,52 @@
     import DeleteIcon from "./svgs/DeleteIcon.svelte";
     import EditIcon from "./svgs/EditIcon.svelte";
     import { clickOutside } from "@/utils";
+    import SaveIcon from "./svgs/SaveIcon.svelte";
+    import MiniLoader from "./svgs/MiniLoader.svelte";
+    import {fade} from 'svelte/transition'
+    import {resize} from '@/transition'
+    import { updateTodoDone, updateTodoTitle } from "@/services/todo";
+    import {getContext, createEventDispatcher} from 'svelte'
+    import type { Writable } from "svelte/store";
+
+
+    const dispatch = createEventDispatcher()
 
     export let title: string 
-    export let done: boolean
 
+    let startTitle: string = title
+
+    export let done: boolean
+    export let id: number
+    
+
+
+    const errorMessage = getContext<Writable<string>>('errorMessage')
+
+    let loading: boolean = false
 
 
     let onEdit: boolean = false
     let inputTitle: HTMLInputElement
 
-    const onClickEdit = () => {
-        onEdit = true
-        inputTitle.focus()
+    const onClickEdit = async () => {
+        if (!onEdit) {
+            onEdit = true
+            inputTitle.focus()
+        } else {
+            if (title !== startTitle) {
+                try {
+                    loading = true
+                    await updateTodoTitle(id, title)
+                    loading = false
+                    startTitle = title
+                } catch (e) {
+                    $errorMessage = e.response.data.message
+                }
+            }
+            onEdit = false
+            inputTitle.blur()
+        }
     }
 
     const onOutClick = () => {
@@ -21,24 +55,57 @@
         inputTitle.blur()
     }
 
+    const onClickDone = async () => {
+        try {
+            loading = true
+            await updateTodoDone(id, done)
+        } catch (e) {
+            $errorMessage = e.response.data.message
+        } finally {
+            loading = false
+        }
+
+    }
+
+    const onClickDelete = () => {
+
+        dispatch('deleteTodo', {id})
+    }
+
+
 </script>
 
 <div 
 use:clickOutside
 on:outclick={onOutClick}
+transition:resize|local={{}}
 class="todo">
 
     <div class="left">
-        <input bind:checked={done} type="checkbox">
-        <input bind:this={inputTitle} class:on-edit={onEdit} class="title" type="text" placeholder={title}>
+        <input 
+        bind:checked={done} 
+        on:change={onClickDone}
+        type="checkbox">
+        <input bind:this={inputTitle} bind:value={title} class:on-edit={onEdit} class="title" type="text" placeholder={title}>
     </div>
+    {#if loading}
+        <div transition:fade|local class="mini-loader">
+            <MiniLoader />
+        </div>
+    {/if}
     <div class="icons">
         <button 
         on:click={onClickEdit}
         class="edit">
-            <EditIcon />
+            {#if !onEdit}
+                <EditIcon />
+            {:else}
+                <SaveIcon />
+            {/if}
         </button>
-        <button class="delete">
+        <button 
+        on:click={onClickDelete}
+        class="delete">
             <DeleteIcon />
         </button>
     </div>
@@ -51,6 +118,27 @@ class="todo">
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    position: relative;
+
+
+    .mini-loader {
+
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        pointer-events: all;
+        background: rgba(0, 0, 0, 0.178)  ;
+        :global(svg) {
+            height: 20px;
+        }
+    }
+
     input {
         // display: block;
         width: 15px;
