@@ -52,6 +52,7 @@
 
     const onOutClick = () => {
         onEdit = false
+        title = startTitle
         inputTitle.blur()
     }
 

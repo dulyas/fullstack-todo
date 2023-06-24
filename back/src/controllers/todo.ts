@@ -6,6 +6,28 @@ import * as todoService from '@/services/todo'
 
 export const getTodosByUserId = async (req: Request, res: Response, next: NextFunction) => {
 
+    
+    // #swagger.description = 'get Todos for user'
+    /* #swagger.parameters['user_id'] = {
+    description: 'user_id',
+    type: 'number',
+    required: true
+    } */
+    /* #swagger.parameters['limit'] = {
+    description: 'limit users for pagination',
+    type: 'number',
+    required: false
+    } */
+    /* #swagger.parameters['offset'] = {
+    description: 'offset for limit for pagination',
+    type: 'number',
+    required: false
+    } */
+    /* #swagger.responses[200] = {
+    description: 'Todos',
+    schema: { $ref: '#/definitions/Todos' }
+    } */
+
     try {
 
         const {user_id, limit = 5, offset = 0} = req.query
@@ -23,6 +45,14 @@ export const getTodosByUserId = async (req: Request, res: Response, next: NextFu
 }
 
 export const createTodo = async (req: Request, res: Response, next: NextFunction) => {
+
+
+
+
+
+
+
+
     try {
         const {user_id, title} = req.body
 
@@ -39,6 +69,8 @@ export const createTodo = async (req: Request, res: Response, next: NextFunction
 }
 
 export const deleteTodo = async (req: Request, res: Response, next: NextFunction) => {
+
+
     try {
         const {id} = req.body
 
@@ -54,6 +86,8 @@ export const deleteTodo = async (req: Request, res: Response, next: NextFunction
 }
 
 export const updateTodoTitle = async (req: Request, res: Response, next: NextFunction) => {
+
+
     try {
         const {id, title} = req.body
 
@@ -69,6 +103,8 @@ export const updateTodoTitle = async (req: Request, res: Response, next: NextFun
 }
 
 export const updateTodoDone = async (req: Request, res: Response, next: NextFunction) => {
+
+
     try {
 
         const {id, done} = req.body

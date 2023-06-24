@@ -71,10 +71,11 @@
     const logout = async (email: string) => {
         $isLoading = true
         try {
+            navigate('/login')
             await AuthService.logout(email)
             localStorage.removeItem('token')
             $user = null
-            navigate('/login')
+
         } catch (error: any) {
             $errorMessage = error.response?.data?.message || error
         } finally {

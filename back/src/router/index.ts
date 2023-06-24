@@ -5,7 +5,8 @@ import todo from './todo'
 
 const router = Router()
 
-router.use('/user', user)
-router.use('/todo', todo)
+router.use('', user)
+router.use('', todo)
+
 
 export default router

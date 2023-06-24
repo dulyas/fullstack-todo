@@ -6,6 +6,10 @@ import { createServer } from "http";
 import UserDto from '@/dtos/user-dto';
 import cookieParser from "cookie-parser";
 import errorMiddleware from "@/middleware/error-middleware";
+import { readFileSync } from 'fs'
+import swaggerUi from 'swagger-ui-express'
+import { join } from 'path';
+
 
 const app = express()
 
@@ -20,6 +24,10 @@ app.use(cookieParser())
 
 app.use('/', router);
 app.use(errorMiddleware)
+
+const swaggerFile = JSON.parse(readFileSync(join(__dirname, '../swagger/output.json')))
+app.use('/api-doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+
 const server = createServer(app)
 
 declare global {

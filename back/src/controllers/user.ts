@@ -7,6 +7,8 @@ import * as userService from '@/services/user'
 
 export const registration = async (req: Request, res: Response, next: NextFunction) => {
 
+
+
     try {
         const errors: Result<ValidationError> = validationResult(req)
 
@@ -29,6 +31,9 @@ export const registration = async (req: Request, res: Response, next: NextFuncti
 
 export const login = async (req: Request, res: Response, next: NextFunction) => {
 
+
+
+
     try {
 
         const {email, password} = req.body
@@ -46,6 +51,10 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
 }
 
 export const logout = async (req: Request, res: Response, next: NextFunction) => {
+
+
+
+
     try {
         // console.log(req)
         const {refreshToken} = req.cookies
@@ -58,6 +67,8 @@ export const logout = async (req: Request, res: Response, next: NextFunction) =>
 }
 
 export const refresh = async (req: Request, res: Response, next: NextFunction) => {
+
+
     try {
         const {refreshToken} = req.cookies
         // console.log('refreshtoken',refreshToken)
@@ -74,6 +85,18 @@ export const refresh = async (req: Request, res: Response, next: NextFunction) =
 
 
 export const getUsers = async (req: Request, res: Response, next: NextFunction) => {
+
+    // #swagger.description = 'get All Users (dev only)'
+
+
+    /* #swagger.responses[200] = {
+    description: 'all Users',
+    schema: { $ref: '#/definitions/Users' }
+    } */
+
+
+
+
     try {
         
         const users = await User.query()

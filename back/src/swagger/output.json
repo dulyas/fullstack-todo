@@ -1,0 +1,338 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "fullstacktodo",
+    "description": "My fullstacktodo",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/user/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/registration": {
+      "post": {
+        "description": "Register New User",
+        "parameters": [
+          {
+            "name": "email",
+            "description": "user email",
+            "type": "string",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "name": "password",
+            "description": "user password",
+            "type": "string",
+            "required": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User with Refresh and Acess tokens",
+            "schema": {
+              "$ref": "#/definitions/UserWithTokens"
+            }
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "description": "User Login",
+        "parameters": [
+          {
+            "name": "email",
+            "description": "user email",
+            "type": "string",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "name": "password",
+            "description": "user password",
+            "type": "string",
+            "required": true,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User with Refresh and Acess tokens",
+            "schema": {
+              "$ref": "#/definitions/UserWithTokens"
+            }
+          }
+        }
+      }
+    },
+    "/user/logout": {
+      "post": {
+        "description": "User Logout",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/user/refresh": {
+      "get": {
+        "description": "Refresh token",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/todo/": {
+      "get": {
+        "description": "get Todos for user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "description": "user_id",
+            "type": "number",
+            "required": true,
+            "in": "query"
+          },
+          {
+            "name": "limit",
+            "description": "limit users for pagination",
+            "type": "number",
+            "required": false,
+            "in": "query"
+          },
+          {
+            "name": "offset",
+            "description": "offset for limit for pagination",
+            "type": "number",
+            "required": false,
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Todos",
+            "schema": {
+              "$ref": "#/definitions/Todos"
+            }
+          }
+        }
+      }
+    },
+    "/todo/createTodo": {
+      "post": {
+        "description": "Create Todo for user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "body",
+            "description": "user_id of creator",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          {
+            "name": "title",
+            "in": "body",
+            "description": "Title for todo",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "new Todo",
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            }
+          }
+        }
+      }
+    },
+    "/todo/todo/updateTodoTitle": {
+      "post": {
+        "description": "update Todo title for user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "body",
+            "description": "user_id of creator",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          {
+            "name": "title",
+            "in": "body",
+            "description": "Title for todo",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "new Todo",
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            }
+          }
+        }
+      }
+    },
+    "/todo/updateTodoDone": {
+      "post": {
+        "description": "update Todo title for user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "body",
+            "description": "user_id of creator",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          {
+            "name": "done",
+            "in": "body",
+            "description": "new done status for todo",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "new Todo",
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            }
+          }
+        }
+      }
+    },
+    "/todo/deleteTodo": {
+      "post": {
+        "description": "delete Todo for user",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "body",
+            "description": "user_id of creator",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "number of deleted todos (must be 1)",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "count": {
+                  "type": "number",
+                  "example": 1
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "email": {
+          "type": "string",
+          "example": "tester@test.com"
+        }
+      }
+    },
+    "Users": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/User"
+      }
+    },
+    "UserWithTokens": {
+      "type": "object",
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/User"
+        },
+        "refreshToken": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckB0ZXN0LmNvbSIsImlkIjoxLCJpYXQiOjE2ODc2MjcyMDIsImV4cCI6MTY5MDIxOTIwMn0.kFZHqXCfnlOjhipw7UuVnTlgkXE21jk1U5oQ4bGgloE"
+        },
+        "accessToken": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlckB0ZXN0LmNvbSIsImlkIjoxLCJpYXQiOjE2ODc2MjcyMDIsImV4cCI6MTY5MDIxOTIwMn0.kFZHqXCfnlOjhipw7UuVnTlgkXE21jk1U5oQ4bGgloE"
+        }
+      }
+    },
+    "Todo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "1"
+        },
+        "title": {
+          "type": "string",
+          "example": "test"
+        },
+        "done": {
+          "type": "boolean",
+          "example": false
+        }
+      }
+    },
+    "Todos": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Todo"
+      }
+    }
+  }
+}
