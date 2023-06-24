@@ -3,10 +3,13 @@ import { ValidationError } from "express-validator"
 
 export default class ApiError extends Error {
     status: number
+    message: string
     errors?: ValidationError[]
 
     constructor(status: number, message: string, errors?: ValidationError[]) {
+
         super(message) 
+        this.message = message
         this.status = status 
         if (errors) this.errors = errors
     }

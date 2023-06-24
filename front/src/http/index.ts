@@ -2,7 +2,7 @@
 import axios from "axios";
 import { AuthResponse } from "../models"; 
 
-export const API_URL = 'http://localhost:4422/api'
+export const API_URL = 'http://localhost:1338'
 
 
 const api = axios.create({
@@ -20,7 +20,7 @@ api.interceptors.response.use((config) => {
     return config
 }, async (err) => {
     const originalRequest = err.config
-    if (err.response.status == 401 && err.config && !err.config._isRetry) {
+    if (err?.response?.status == 401 && err.config && !err.config._isRetry) {
         originalRequest._isRetry = true
         try {
             const response = await axios.get<AuthResponse>(`${API_URL}/user/refresh`, {withCredentials: true})

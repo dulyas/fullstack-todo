@@ -7,11 +7,13 @@
 
   import type { IUser } from "@/models";
   import type { Writable } from "svelte/store";
+  import ErrorMessage from "@/components/ErrorMessage.svelte";
 
 
 
   const user = getContext<Writable<IUser | null>>('user')
   const userIsLoading = getContext<Writable<boolean>>('userIsLoading')
+  const errorMessage = getContext<Writable<string>>('errorMessage')
 
   onMount(() => {
     if (!$user) navigate('/login')
@@ -23,6 +25,9 @@
 
 
 <Router url='/'>
+    {#if $errorMessage}
+      <ErrorMessage/>
+    {/if}
     {#if $userIsLoading} 
       <Loader />
     {:else}

@@ -1,5 +1,5 @@
 import ApiError from "@/exceptions/api-error";
-import tokenService from "@/service/token-service";
+import { validateAccessToken } from "@/services/token";
 import { NextFunction, Request, Response } from 'express';
 
 
@@ -18,7 +18,7 @@ export default function(req: Request, res: Response, next: NextFunction) {
             return next(ApiError.UnauthorizedError())
         }
 
-        const userData = tokenService.validateAccessToken(accessToken)
+        const userData = validateAccessToken(accessToken)
 
         if (!userData) {
             return next(ApiError.UnauthorizedError())

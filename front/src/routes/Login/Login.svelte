@@ -1,7 +1,14 @@
 <script lang="ts">
 import { resize } from "@/transition";
+import { getContext } from "svelte";
+import type { Writable } from "svelte/store";
+import type { UserService } from "@/models";
 
 type LoginRegister = 'login' | 'register'
+
+
+const errorMessage = getContext<Writable<string>>('errorMessage')
+const userService = getContext<UserService>('userService')
 
 let selectedTab: LoginRegister = 'login'
 let email: string = ''
@@ -21,7 +28,26 @@ const tabs: {code: LoginRegister, title: string}[] = [
 ]
 
 const sendForm = async () => {
-    console.log(email, password, confirmPassword, selectedTab, keepMeCheckBoxValue)
+
+
+
+    if (selectedTab === 'login') {
+        
+        await userService.login(email, password, keepMeCheckBoxValue)
+
+    } else {
+        if (email.length < 6 || email.length > 50) return $errorMessage = 'Email должен быть длиннее 6 символов и короче 50'
+        if (password.length < 6 || password.length > 50) return $errorMessage = 'Password должен быть длиннее 6 символов и короче 50'
+
+        if (password !== confirmPassword) return $errorMessage = 'Пароли должны совпадать'
+
+        await userService.registration(email, password, keepMeCheckBoxValue)
+    }
+
+    // password = ''
+    // email = ''
+    // confirmPassword = ''
+
 }
 
 
@@ -41,7 +67,7 @@ const sendForm = async () => {
     
         <form on:submit|preventDefault>
             <label>
-                <div>Username</div>
+                <div>Email</div>
                 <input bind:value={email} type="text">
             </label>
             <label>
@@ -149,7 +175,8 @@ const sendForm = async () => {
                         margin-block-start: 10px;
                         padding: 10px 10px 10px 15px;
                         border-radius: 25px;
-
+                        box-shadow: inset 0 0 0 50px rgb(97, 94, 100);
+                        -webkit-text-fill-color: #fff;
                     }
                 }
 
@@ -224,13 +251,13 @@ const sendForm = async () => {
                             transform-origin: left bottom;      
                         }
                     }
-
-                    span {
+                }
+                
+                span {
                         line-height: 0;
                         font-size: 12px;
                         color: #FFFFFF;
                     }
-                }
             }
 
             .line {
@@ -250,6 +277,7 @@ const sendForm = async () => {
                 left: 50%;
                 transform: translateX(-50%);
                 cursor: pointer;
+                color: rgb(175, 169, 182);
             }
 
         }

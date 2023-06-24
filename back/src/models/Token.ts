@@ -3,7 +3,7 @@ import { Model } from "objection";
 
 export default class Token extends Model {
     id!: number
-    user_id!: string
+    user_id!: number
     refreshToken!: string
 
     static get tableName() {

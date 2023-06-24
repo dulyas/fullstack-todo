@@ -27,8 +27,8 @@ svg {
 input,
 select,
 textarea {    
-	box-shadow: inset 0 0 0 50px rgb(97, 94, 100);
-	-webkit-text-fill-color: #fff;
+
+	
   border: 0;
 	border-radius: 0;
 	width: 100%;

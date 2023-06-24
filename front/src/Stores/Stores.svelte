@@ -1,7 +1,13 @@
 <script lang="ts">
 import User from "./User.svelte";
+import Error from "./Error.svelte";
+import Loading from "./Loading.svelte";
 </script>
 
-<User>
-    <slot />
-</User>
+<Error>
+    <Loading>
+        <User>
+            <slot />
+        </User>
+    </Loading>
+</Error>

@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken"
 import Token from "@/models/Token"
 import config from "@/config/index"
+import UserDto from "@/dtos/user-dto"
 
 
 export const generateTokens = (payload: string | object | Buffer) => {
@@ -13,7 +14,7 @@ export const generateTokens = (payload: string | object | Buffer) => {
     }
 } 
 
-export const saveToken = async (userId: string, refreshToken: string) => {
+export const saveToken = async (userId: number, refreshToken: string) => {
     const tokenData = await Token.query().findOne('user_id', userId)
 
     if (tokenData) {
@@ -28,44 +29,32 @@ export const saveToken = async (userId: string, refreshToken: string) => {
 }
 
 export const removeToken = async (refreshToken: string) => {
-    const tokenData = await Token.query().delete('refreshT')
+    const tokenData = await Token.query().findOne({refreshToken}).delete()
     
     return tokenData
 }
 
-class TokenService {
+
+export const findToken = async (refreshToken: string) => {
+    const tokenData = await Token.query().findOne({refreshToken})
+    return tokenData
+}
 
 
-
-
-    async removeToken(refreshToken: string) {
-        const tokenData = await TokenModel.deleteOne({refreshToken})
-        return tokenData
-    }
-
-    async findToken(refreshToken: string) {
-        const tokenData = await TokenModel.findOne({refreshToken})
-        return tokenData
-    }
-
-
-    validateAccessToken(token: string) {
-        try {
-            const userData = jwt.verify(token, config.JWT_ACCESS_SECRET)
-            return userData as UserToken
-        } catch (e) {
-            return null
-        }
-    }
-
-    validateRefreshToken(token: string) {
-        try {
-            const userData = jwt.verify(token, config.JWT_REFRESH_SECRET)
-            return userData as UserToken
-        } catch (e) {
-            return null
-        }
+export const validateAccessToken = (token: string): UserDto | null => {
+    try {
+        const userData = jwt.verify(token, config.jwt.acess_secret)
+        return userData as UserDto
+    } catch (e) {
+        return null
     }
 }
 
-export default new TokenService()
+export const validateRefreshToken = (token: string): UserDto | null => {
+    try {
+        const userData = jwt.verify(token, config.jwt.acess_secret)
+        return userData as UserDto
+    } catch (e) {
+        return null
+    }
+}
