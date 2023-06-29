@@ -11,6 +11,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src')
     },
   },
+  base: '',
+  optimizeDeps: {exclude: ["svelte-routing"]},
   css: {
     postcss: {
       plugins: [

@@ -8,7 +8,7 @@
   import type { IUser } from "@/models";
   import type { Writable } from "svelte/store";
   import ErrorMessage from "@/components/ErrorMessage.svelte";
-
+  import { basepath } from "@/http";
 
 
   const user = getContext<Writable<IUser | null>>('user')
@@ -16,7 +16,8 @@
   const errorMessage = getContext<Writable<string>>('errorMessage')
   const isLoading = getContext<Writable<boolean>>('isLoading')
 
-  $: if (!$user && !$userIsLoading) navigate('/login')
+
+  $: if (!$user && !$userIsLoading) navigate(basepath + '/login')
 
 
 </script>
@@ -24,7 +25,7 @@
 
 
 
-<Router url='/'>
+<Router url='/' basepath="/todo-front">
     {#if $errorMessage}
       <ErrorMessage/>
     {/if}

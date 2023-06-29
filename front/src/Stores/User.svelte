@@ -4,6 +4,7 @@
     import type { IUser } from "@/models";
     import * as AuthService from "@/services/user";
     import { navigate } from "svelte-routing";
+    import { basepath } from "@/http";
 
     const user = writable<IUser | null>(null)
     const userIsLoading = writable<boolean>(true)
@@ -12,7 +13,6 @@
     const errorMessage = getContext<Writable<string>>('errorMessage')
     const isLoading = getContext<Writable<boolean>>('isLoading')
 
-    
 
     const checkAuth = async () => {
         // $userIsLoading = false
@@ -21,7 +21,7 @@
             const response = await AuthService.refresh()
             localStorage.setItem('token', response.data.refreshToken)
             $user = response.data.user
-            navigate('/')
+            navigate(basepath + '/')
         } catch (error: any) {
             
             console.log(error?.response?.data?.message || error)
@@ -40,7 +40,7 @@
             }
 
             $user = response.data.user
-            navigate('/')
+            navigate(basepath + '/')
 
         } catch (error: any) {
             console.log(error)
@@ -60,7 +60,7 @@
             }
 
             $user = response.data.user
-            navigate('/')
+            navigate(basepath + '/')
         } catch (error: any) {
             $errorMessage = error?.response?.data?.message || error
         } finally {
@@ -71,7 +71,7 @@
     const logout = async (email: string) => {
         $isLoading = true
         try {
-            navigate('/login')
+            navigate(basepath + '/login')
             await AuthService.logout(email)
             localStorage.removeItem('token')
             $user = null
@@ -91,6 +91,7 @@
             checkAuth()
         } else {
             $userIsLoading = false
+            navigate(basepath + '/login')
         }
     })
 
